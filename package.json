@@ -1,0 +1,18 @@
+{
+  "name": "nadlan-netanya",
+  "version": "1.0.0",
+  "description": "Interactive map of Netanya real-estate deals (last 3 years) with nearby amenities.",
+  "scripts": {
+    "serve": "python3 -m http.server 8099",
+    "harvest": "node harvest.js",
+    "geocode": "node build_geocode.js && node build_geocode_neigh.js",
+    "amenities": "node process_amenities.js",
+    "build": "node build_data.js"
+  },
+  "keywords": ["netanya", "nadlan", "real-estate", "map", "leaflet"],
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "puppeteer-core": "^23.11.1"
+  }
+}

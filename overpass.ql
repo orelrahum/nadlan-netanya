@@ -1,0 +1,26 @@
+[out:json][timeout:120];
+area["name"="נתניה"]["boundary"="administrative"]->.a;
+(
+  nwr["amenity"="school"](area.a);
+  nwr["amenity"="kindergarten"](area.a);
+  nwr["amenity"="college"](area.a);
+  nwr["amenity"="university"](area.a);
+  nwr["shop"="supermarket"](area.a);
+  nwr["shop"="convenience"](area.a);
+  nwr["shop"="greengrocer"](area.a);
+  nwr["shop"="bakery"](area.a);
+  nwr["shop"="butcher"](area.a);
+  nwr["shop"="mall"](area.a);
+  nwr["amenity"="marketplace"](area.a);
+  nwr["amenity"="pharmacy"](area.a);
+  nwr["amenity"="clinic"](area.a);
+  nwr["amenity"="hospital"](area.a);
+  nwr["amenity"="doctors"](area.a);
+  nwr["leisure"="park"](area.a);
+  nwr["leisure"="playground"](area.a);
+  nwr["amenity"="place_of_worship"](area.a);
+  nwr["amenity"="bank"](area.a);
+  nwr["amenity"="library"](area.a);
+  nwr["highway"="bus_stop"](area.a);
+);
+out center tags;

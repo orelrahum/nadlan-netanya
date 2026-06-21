@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>נדל"ן נתניה · מפת עסקאות 3 שנים אחרונות</title>
+  <meta name="description" content="מפת עסקאות נדל\"ן בנתניה ב-3 השנים האחרונות, כולל בתי ספר, גני ילדים, מינימרקטים ועוד." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header id="topbar">
+    <div class="brand">
+      <span class="logo">🏙️</span>
+      <div class="brand-text">
+        <h1>נדל"ן נתניה</h1>
+        <p id="coverage">מפת עסקאות נדל"ן</p>
+      </div>
+    </div>
+    <div class="topstats" id="topstats"><!-- filled by JS --></div>
+    <button id="infoBtn" class="info-btn" aria-label="מידע" title="אודות הנתונים">ⓘ</button>
+    <button id="menuToggle" class="menu-toggle" aria-label="תפריט">☰</button>
+  </header>
+
+  <div id="layout">
+    <aside id="sidebar">
+      <section class="panel">
+        <h2>סינון עסקאות</h2>
+
+        <label class="fld">טווח תאריכים</label>
+        <div class="row2">
+          <input type="month" id="dateFrom" />
+          <span>–</span>
+          <input type="month" id="dateTo" />
+        </div>
+
+        <label class="fld">מספר חדרים</label>
+        <div id="roomChips" class="chips"></div>
+
+        <label class="fld">מחיר (₪)</label>
+        <div class="row2">
+          <input type="number" id="priceMin" placeholder="מ-" min="0" step="100000" />
+          <span>–</span>
+          <input type="number" id="priceMax" placeholder="עד" min="0" step="100000" />
+        </div>
+
+        <label class="fld">סוג נכס</label>
+        <select id="natureSel"><option value="">הכל</option></select>
+
+        <button id="resetFilters" class="btn-reset">איפוס סינון</button>
+      </section>
+
+      <section class="panel">
+        <h2>שכבת מחירים</h2>
+        <label class="switch-row">
+          <input type="checkbox" id="dealsToggle" checked />
+          <span>הצג עסקאות (<b id="dealCount">0</b>)</span>
+        </label>
+        <div class="legend" id="priceLegend"></div>
+      </section>
+
+      <section class="panel">
+        <h2>מה בסביבה?</h2>
+        <p class="hint">בתי ספר · גני ילדים · מינימרקטים ועוד</p>
+        <div id="amenityList" class="amenity-list"></div>
+      </section>
+
+      <footer class="src">
+        <span id="metaLine"></span><br/>
+        מקור עסקאות: אתר הנדל"ן הממשלתי · מיקומים: govmap · נקודות עניין: OpenStreetMap
+      </footer>
+    </aside>
+
+    <main id="mapWrap">
+      <div id="map"></div>
+      <button id="listToggle" class="list-toggle">📋 רשימת עסקאות</button>
+      <div id="dealPanel" class="deal-panel hidden">
+        <div class="deal-panel-head">
+          <strong>עסקאות מסוננות (<span id="listCount">0</span>)</strong>
+          <button id="listClose" aria-label="סגור">✕</button>
+        </div>
+        <div class="deal-table-wrap">
+          <table class="deal-table">
+            <thead><tr><th>כתובת</th><th>תאריך</th><th>מחיר</th><th>חד'</th><th>מ"ר</th><th>₪/מ"ר</th></tr></thead>
+            <tbody id="dealRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="loader"><div class="spin"></div><span>טוען נתונים…</span></div>
+
+  <div id="infoModal" class="modal hidden">
+    <div class="modal-card">
+      <button class="modal-x" id="infoClose" aria-label="סגור">✕</button>
+      <h2>אודות מפת נדל"ן נתניה</h2>
+      <p>מפה אינטראקטיבית של עסקאות נדל"ן בעיר נתניה, יחד עם נקודות עניין בסביבה — בתי ספר, גני ילדים, מינימרקטים, סופרמרקטים, פארקים ועוד.</p>
+      <ul id="infoStats"></ul>
+      <h3>מקורות הנתונים</h3>
+      <ul>
+        <li><b>עסקאות נדל"ן:</b> אתר הנדל"ן הממשלתי (nadlan.gov.il)</li>
+        <li><b>מיקומי כתובות:</b> ממשל זמין · govmap.gov.il</li>
+        <li><b>נקודות עניין:</b> OpenStreetMap</li>
+      </ul>
+      <p class="modal-note">מיקומים מסוימים (עסקאות ללא כתובת מדויקת, למשל בפרויקטים בבנייה) מוצגים במרכז השכונה ומסומנים כ"מיקום משוער". הנתונים מובאים לצורך מידע כללי בלבד.</p>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
