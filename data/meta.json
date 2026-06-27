@@ -1,14 +1,54 @@
 {
-  "generated": "2026-06-21T08:32:21.657Z",
+  "generated": "2026-06-27T18:56:45.109Z",
   "city": "נתניה",
+  "settlementCode": 7400,
   "totalDeals": 1000,
+  "residentialDeals": 946,
   "mappedDeals": 945,
   "exactDeals": 795,
   "approxDeals": 150,
+  "unplacedDeals": 55,
   "dateFrom": "2025-12-30",
   "dateTo": "2026-06-10",
-  "medianPrice": 2700000,
-  "medianPpsm": 27942,
+  "medianPrice": 2753000,
+  "medianPpsm": 28333,
+  "pmLow": 18000,
+  "pmHigh": 55000,
+  "catCounts": {
+    "apartment": 933,
+    "commercial": 34,
+    "land": 8,
+    "other": 8,
+    "garden": 4,
+    "house": 7,
+    "parking": 4,
+    "vacation": 1,
+    "penthouse": 1
+  },
+  "catLabels": {
+    "apartment": "דירה",
+    "garden": "דירת גן",
+    "penthouse": "פנטהאוז / דירת גג",
+    "house": "קוטג' / בית פרטי",
+    "vacation": "דירת נופש",
+    "commercial": "מסחרי (משרד/חנות)",
+    "parking": "חניה",
+    "storage": "מחסן",
+    "land": "קרקע",
+    "other": "אחר / לא מסווג"
+  },
+  "catResidential": {
+    "apartment": true,
+    "garden": true,
+    "penthouse": true,
+    "house": true,
+    "vacation": true,
+    "commercial": false,
+    "parking": false,
+    "storage": false,
+    "land": false,
+    "other": false
+  },
   "amenityCount": 990,
   "amenityCounts": {
     "worship": 58,
@@ -28,5 +68,6 @@
     "park": 174,
     "mall": 10,
     "hospital": 2
-  }
+  },
+  "source": "אתר הנדל\"ן הממשלתי · nadlan.gov.il"
 }

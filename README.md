@@ -11,13 +11,41 @@ supermarkets, parks, clinics, etc.).
 
 ## ✨ Features
 
-- 🗺️ **Clickable Leaflet map** with clustered deal markers, colored by price-per-m².
+- 🗺️ **Clickable map** with clustered deal markers, colored by price-per-m².
+- 🛰️ **Basemap switcher** — clean street map / satellite. Optionally use **real Google
+  Maps** by adding your own API key (see below); works without one out of the box.
+- 🏠 **Property-type categories** — every deal is classified from the official "deal
+  nature" into apartment, garden-apartment, penthouse, cottage/house, etc. Residential
+  types are shown by default; non-residential records (office, shop, parking, land) are
+  hidden by default and can be toggled on.
 - 🏫 **Amenity layers** — schools, kindergartens, mini/super-markets, pharmacies,
   clinics, parks, playgrounds, places of worship, banks and more (toggleable).
 - 🔎 **Filters** — date range, number of rooms, price range and property type.
-- 📊 **Live stats** — number of deals shown, median price, median ₪/m².
+- 📊 **Live stats** — number of deals shown, median price, median ₪/m² (residential).
 - 📋 **Deals table** synced to the current filters (click a row to fly to it on the map).
 - 📱 Responsive, right-to-left (Hebrew) UI.
+
+### Data quality
+
+All deals come straight from the official government registry. The builder
+(`build_data.js`) categorizes each record, **hides non-residential records by default**,
+shows ₪/m² only for residential units, and **clamps the colour scale** (10th–90th
+percentile) so a few tiny-unit / bulk-sale outliers don't distort the map. Deals without
+an exact address (e.g. units in projects still under construction) are placed at the
+**centre of their neighbourhood** and clearly flagged as approximate.
+
+## 🗺️ Using real Google Maps (optional)
+
+The map works with no key using a free Google-style basemap. To switch to **real Google
+Maps**, open `js/app.js` and set your key:
+
+```js
+const GOOGLE_MAPS_API_KEY = "YOUR_GOOGLE_MAPS_JS_API_KEY";
+```
+
+Create a key in the Google Cloud console (enable *Maps JavaScript API*) and restrict it to
+your site's domain (e.g. `orelrahum.github.io/*`). When a key is present the basemap
+switcher gains *Google מפה* and *Google לוויין* layers.
 
 ## 🚀 Run it
 
